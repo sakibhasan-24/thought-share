@@ -21,3 +21,7 @@
 # step-3
 
 - create pages routes
+
+# step-4
+
+- install flowbite react for some build in components

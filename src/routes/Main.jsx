@@ -1,12 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Home from "../pages/Home/Home";
+import Header from "../pages/Header/Header";
 
 export default function Main() {
   return (
     <div>
       <div>
-        <Home />
+        <Header />
       </div>
       <div>
         <Outlet />
