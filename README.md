@@ -50,3 +50,8 @@
   _ i will store it in local storage
   _ i will store it in cookie \* i will store it in session storage
 - we will store it in local storage \* as we have google login,signup,and sign in,so,we will set it a common place,for us it is authcontext
+
+# step -9
+
+- create a profile section
+- create

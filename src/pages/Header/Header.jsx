@@ -1,11 +1,13 @@
-import { Button, Navbar, TextInput } from "flowbite-react";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
+import useAuth from "../../hook/useAuth";
 export default function Header() {
   const location = useLocation();
 
+  const { user } = useAuth();
   return (
     <Navbar className="border-b-2 border-sky-200 sm:p-4">
       <Link className="font-bold text-xs sm:text-xl " to="/">
@@ -29,9 +31,37 @@ export default function Header() {
         <Button className="w-8 h-8 sm:w-10 sm:h-10">
           <FaMoon />
         </Button>
-        <Link to="/signup">
-          <Button gradientDuoTone="greenToBlue">SignUp</Button>
-        </Link>
+        {user ? (
+          <>
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={<Avatar alt="user img" img={user?.photoURL} rounded />}
+            >
+              <Dropdown.Header className="font-semibold space-y-4">
+                <span className="block text-sm">{user?.displayName}</span>
+                <span className="block text-sm truncate mt-2">
+                  {user?.email}
+                </span>
+                <Link
+                  className="block text-sm truncate mt-2"
+                  to="/dashboard?tab=proifle"
+                >
+                  <Dropdown.Item>Profile</Dropdown.Item>
+                </Link>
+                <span className="block text-sm truncate cursor-pointer mt-2">
+                  Logout
+                </span>
+              </Dropdown.Header>
+            </Dropdown>
+          </>
+        ) : (
+          <>
+            <Link to="/signup">
+              <Button gradientDuoTone="greenToBlue">SignUp</Button>
+            </Link>
+          </>
+        )}
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
