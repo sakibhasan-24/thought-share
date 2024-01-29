@@ -25,3 +25,12 @@
 # step-4
 
 - install flowbite react for some build in components
+
+# step-5
+
+- create a sign Up page(react flowbite)
+
+* make it functional
+* upload image in firebase
+* get image url and update userName and image in firebase
+* store it in mongodb
