@@ -34,3 +34,15 @@
 * upload image in firebase
 * get image url and update userName and image in firebase
 * store it in mongodb
+
+# step-6
+
+- create login page
+- use login functionality
+
+# step-7 a big questions
+
+- where should i store the user token when created
+  _ i will store it in local storage
+  _ i will store it in cookie \* i will store it in session storage
+- we will store it in local storage \* as we have google login,signup,and sign in,so,we will set it a common place,for us it is authcontext

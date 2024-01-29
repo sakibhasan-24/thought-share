@@ -3,13 +3,16 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import useAxiosPublic from "../apiCallHooks/useAxiosPublic";
 export const AuthContext = createContext();
 
 const auth = getAuth(app);
 export default function AuthProvider({ children }) {
+  const axiosPublic = useAxiosPublic();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,6 +20,11 @@ export default function AuthProvider({ children }) {
     setLoading(true);
 
     return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const userLogIn = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const updateUser = (displayName, photoURL) => {
@@ -28,16 +36,21 @@ export default function AuthProvider({ children }) {
     user,
     createUser,
     updateUser,
+    userLogIn,
   };
 
   useEffect(() => {
-    const clearMemory = onAuthStateChanged(auth, (currentUser) => {
+    const clearMemory = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setLoading(true);
         setUser(currentUser);
+        const res = await axiosPublic.post("/jwt", currentUser);
+        localStorage.setItem("token", res.data.token);
         // console.log(currentUser);
+        console.log(res.data.token);
       } else {
         console.log("no current User");
+        localStorage.removeItem("token");
         setLoading(false);
         setUser(null);
       }

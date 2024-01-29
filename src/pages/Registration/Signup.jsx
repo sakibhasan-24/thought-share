@@ -1,4 +1,11 @@
-import { Button, Checkbox, FileInput, Label, TextInput } from "flowbite-react";
+import {
+  Button,
+  Checkbox,
+  FileInput,
+  Label,
+  Spinner,
+  TextInput,
+} from "flowbite-react";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +21,7 @@ import {
 
 import app from "../../firebase/firebase.config";
 import Swal from "sweetalert2";
+import GoogleButton from "../../components/GoogleButton";
 
 export default function Signup() {
   const { user, createUser, updateUser } = useAuth();
@@ -23,6 +31,7 @@ export default function Signup() {
   const axiosPublic = useAxiosPublic();
   const [formData, setFormData] = useState({});
   const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleOnChange = (e) => {
     if (e.target.type === "file") {
@@ -32,6 +41,7 @@ export default function Signup() {
   };
 
   const handleSubmitForm = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     const email = formData?.email;
@@ -73,6 +83,7 @@ export default function Signup() {
       });
       navigate("/login");
     }
+    setLoading(false);
     // console.log("hello");
     // end of update it for photo and display name
   };
@@ -138,7 +149,10 @@ export default function Signup() {
             />
           </div>
 
-          <Button type="submit">Submit</Button>
+          <Button disabled={loading} type="submit">
+            {loading ? <Spinner /> : "Sign Up"}
+          </Button>
+          <GoogleButton />
           <div>
             <p className="mt-8 text-center font-semibold text-slate-800">
               Already a member?
