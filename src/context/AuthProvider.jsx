@@ -1,9 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
@@ -11,6 +13,7 @@ import useAxiosPublic from "../apiCallHooks/useAxiosPublic";
 export const AuthContext = createContext();
 
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 export default function AuthProvider({ children }) {
   const axiosPublic = useAxiosPublic();
   const [user, setUser] = useState(null);
@@ -27,6 +30,11 @@ export default function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const googleLogIn = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+
   const updateUser = (displayName, photoURL) => {
     setLoading(true);
     return updateProfile(auth.currentUser, { displayName, photoURL });
@@ -35,6 +43,7 @@ export default function AuthProvider({ children }) {
     loading,
     user,
     createUser,
+    googleLogIn,
     updateUser,
     userLogIn,
   };
@@ -47,7 +56,7 @@ export default function AuthProvider({ children }) {
         const res = await axiosPublic.post("/jwt", currentUser);
         localStorage.setItem("token", res.data.token);
         // console.log(currentUser);
-        console.log(res.data.token);
+        // console.log(res.data.token);
       } else {
         console.log("no current User");
         localStorage.removeItem("token");

@@ -40,7 +40,11 @@
 - create login page
 - use login functionality
 
-# step-7 a big questions
+# step-7
+
+- google log in
+
+# step-8 a big questions
 
 - where should i store the user token when created
   _ i will store it in local storage
