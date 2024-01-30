@@ -19,32 +19,35 @@ export default function SidebarItem() {
         <Sidebar.Items>
           <Sidebar.ItemGroup>
             <Link to="/dashboard/profile">
-              <Sidebar.Item icon={HiUser}>Profile</Sidebar.Item>
+              <Sidebar.Item icon={HiUser} as={"span"}>
+                Profile
+              </Sidebar.Item>
             </Link>
             <Link to="/dashboard/profile">
-              <Sidebar.Item icon={HiViewBoards} label="Admin" labelColor="dark">
+              <Sidebar.Item
+                icon={HiViewBoards}
+                as={"span"}
+                label="Admin"
+                labelColor="dark"
+              >
                 {user?.displayName}
               </Sidebar.Item>
             </Link>
             <Link to="/dashboard/comment">
-              <Sidebar.Item icon={HiInbox} label="3">
+              <Sidebar.Item icon={HiInbox} label="3" as={"span"}>
                 comment
               </Sidebar.Item>
             </Link>
             <Link to="/dashboard/users">
-              <Sidebar.Item href="#" icon={HiUser}>
+              <Sidebar.Item href="#" icon={HiUser} as={"span"}>
                 Users
               </Sidebar.Item>
             </Link>
             <Link to="/dashboard/add-post">
-              <Sidebar.Item icon={HiShoppingBag}>make a post</Sidebar.Item>
+              <Sidebar.Item icon={HiShoppingBag} as={"span"}>
+                make a post
+              </Sidebar.Item>
             </Link>
-            <Sidebar.Item href="#" icon={HiArrowSmRight}>
-              see request
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiTable}>
-              Sign Up
-            </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
       </Sidebar>
