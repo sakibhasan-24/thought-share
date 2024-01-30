@@ -45,7 +45,7 @@ export default function Header() {
                 </span>
                 <Link
                   className="block text-sm truncate mt-2"
-                  to="/dashboard?tab=proifle"
+                  to="/dashboard/profile"
                 >
                   <Dropdown.Item>Profile</Dropdown.Item>
                 </Link>

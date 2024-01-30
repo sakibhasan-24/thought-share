@@ -55,3 +55,7 @@
 
 - create a profile section
 - create
+
+# step-10
+
+- create dynamic dashboard
