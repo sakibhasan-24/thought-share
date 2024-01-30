@@ -1,8 +1,21 @@
-import { Avatar, Button, Card, Dropdown } from "flowbite-react";
+import {
+  Avatar,
+  Button,
+  Card,
+  Dropdown,
+  FileInput,
+  Label,
+  TextInput,
+} from "flowbite-react";
 import useAuth from "../../hook/useAuth";
+import { useState } from "react";
 
 export default function Profile() {
   const { user } = useAuth();
+  const [isEdit, setIsEdit] = useState(false);
+  const showEditForm = () => {
+    setIsEdit(!isEdit);
+  };
   // console.log(user);
   return (
     <div>
@@ -10,7 +23,11 @@ export default function Profile() {
         <div className="flex justify-end px-4 pt-4">
           <Dropdown inline label="action">
             <Dropdown.Item>
-              <Button color="success" className="block px-2 py-1 text-sm ">
+              <Button
+                onClick={showEditForm}
+                color="success"
+                className="block px-2 py-1 text-sm "
+              >
                 Edit
               </Button>
             </Dropdown.Item>
@@ -52,6 +69,47 @@ export default function Profile() {
           </span>
         </div>
       </Card>
+      {/* edit form */}
+      {isEdit && (
+        <div className="max-w-xl mx-auto">
+          <h1 className="text-2xl font-bold  text-center text-slate-800">
+            Edit Profile
+          </h1>
+          <form className="flex flex-col gap-6 my-6 shadow-2xl shadow-slate-200 p-6">
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="email" value="Your email" />
+              </div>
+              <TextInput
+                id="email"
+                type="email"
+                defaultValue={user?.email}
+                readOnly
+              />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="name" value="Your name" />
+              </div>
+              <TextInput
+                id="name"
+                type="name"
+                defaultValue={user?.displayName}
+              />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="file-upload" value="change image" />
+              </div>
+              <FileInput id="file-upload" />
+            </div>
+            <Button color="success">Update </Button>
+            <Button type="button" color="failure" className="text-slate-100">
+              forget Password
+            </Button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
