@@ -49,9 +49,11 @@ export default function Header() {
                 >
                   <Dropdown.Item>Profile</Dropdown.Item>
                 </Link>
-                <span className="block text-sm truncate cursor-pointer mt-2">
-                  Logout
-                </span>
+                <Link to="/login">
+                  <button className="block text-sm truncate cursor-pointer mt-2">
+                    Logout
+                  </button>
+                </Link>
               </Dropdown.Header>
             </Dropdown>
           </>

@@ -16,6 +16,7 @@ export default function Login() {
     const password = form.password.value;
     userLogIn(email, password).then((result) => {
       const user = result.user;
+      // call user api from db
       if (user) {
         Swal.fire({
           position: "center",

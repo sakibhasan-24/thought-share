@@ -33,6 +33,11 @@ export default function SidebarItem() {
                 {user?.displayName}
               </Sidebar.Item>
             </Link>
+            <Link to="/dashboard/create-post">
+              <Sidebar.Item icon={HiInbox} label="admin" as={"span"}>
+                Create A Post
+              </Sidebar.Item>
+            </Link>
             <Link to="/dashboard/comment">
               <Sidebar.Item icon={HiInbox} label="3" as={"span"}>
                 comment
@@ -41,11 +46,6 @@ export default function SidebarItem() {
             <Link to="/dashboard/users">
               <Sidebar.Item href="#" icon={HiUser} as={"span"}>
                 Users
-              </Sidebar.Item>
-            </Link>
-            <Link to="/dashboard/add-post">
-              <Sidebar.Item icon={HiShoppingBag} as={"span"}>
-                make a post
               </Sidebar.Item>
             </Link>
           </Sidebar.ItemGroup>

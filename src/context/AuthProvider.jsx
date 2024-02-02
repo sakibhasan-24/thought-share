@@ -17,6 +17,7 @@ const googleProvider = new GoogleAuthProvider();
 export default function AuthProvider({ children }) {
   const axiosPublic = useAxiosPublic();
   const [user, setUser] = useState(null);
+  const [logInUser, setLogInUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const createUser = (email, password) => {
@@ -26,6 +27,7 @@ export default function AuthProvider({ children }) {
   };
 
   const userLogIn = (email, password) => {
+    
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -42,6 +44,7 @@ export default function AuthProvider({ children }) {
   const value = {
     loading,
     user,
+    logInUser,
     createUser,
     googleLogIn,
     updateUser,
@@ -62,6 +65,7 @@ export default function AuthProvider({ children }) {
         localStorage.removeItem("token");
         setLoading(false);
         setUser(null);
+        setLogInUser(null);
       }
     });
     return () => clearMemory();

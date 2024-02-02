@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Registration/Login";
 import Signup from "../pages/Registration/Signup";
 import Profile from "../pages/Dashboard/Profile";
+import CreatePost from "../pages/Post/CreatePost";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: <Profile />,
+          },
+          {
+            path: "create-post",
+            element: <CreatePost />,
           },
         ],
       },
