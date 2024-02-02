@@ -1,12 +1,33 @@
 import { Button, FileInput, Select, TextInput } from "flowbite-react";
-import React from "react";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import useAxiosPublic from "../../apiCallHooks/useAxiosPublic";
+import useAxiosSecure from "../../apiCallHooks/useAxiosSecure";
 export default function CreatePost() {
+  const [imageFile, setImageFile] = useState(null);
+  const image_key = import.meta.env.VITE_IMAGE_API_KEY;
+  //   console.log(image_key);
+  const image_hosting = `https://api.imgbb.com/1/upload?key=${image_key}`;
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const handlePost = async (e) => {
+    e.preventdefault();
+  };
+  //   console.log(imageFile);
+  const handleUploadImage = async () => {
+    const image = { image: imageFile };
+    const res = await axiosPublic.post(image_hosting, image, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  };
+
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
       <h1 className="text-3xl font-bold mb-3 text-center">Create Post</h1>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={handlePost}>
         <div className="flex flex-col gap-6 sm:flex-row justify-between">
           <TextInput
             type="text"
@@ -39,8 +60,15 @@ export default function CreatePost() {
           </Select>
         </div>
         <div className="flex gap-6 items-center justify-between border-4 border-teal-950 border-dotted p-4">
-          <FileInput type="file" accept="image/*" />
-          <Button type="button">Upload Image</Button>
+          <FileInput
+            type="file"
+            accept="image/*"
+            required
+            onChange={(e) => setImageFile(e.target.files[0])}
+          />
+          <Button onClick={handleUploadImage} type="button">
+            Upload Image
+          </Button>
         </div>
         <ReactQuill
           theme="snow"
