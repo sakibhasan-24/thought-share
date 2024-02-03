@@ -8,6 +8,7 @@ import Login from "../pages/Registration/Login";
 import Signup from "../pages/Registration/Signup";
 import Profile from "../pages/Dashboard/Profile";
 import CreatePost from "../pages/Post/CreatePost";
+import Posts from "../pages/Post/Posts";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: "create-post",
             element: <CreatePost />,
+          },
+          {
+            path: "posts",
+            element: <Posts />,
           },
         ],
       },

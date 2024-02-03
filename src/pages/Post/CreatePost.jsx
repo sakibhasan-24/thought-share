@@ -54,8 +54,10 @@ export default function CreatePost() {
       });
     }
     setLoading(false);
+    // setImageFile(null);
+    // setFormData({});
   };
-  //   console.log(formData?.image);
+  console.log(formData);
   const isButtonDisabled =
     formData?.image === null || formData?.image === undefined ? true : false;
   //   console.log(isButtonDisabled);

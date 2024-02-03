@@ -17,7 +17,7 @@ export default function GoogleButton() {
       const userInfo = {
         name: user.displayName,
         email: user.email,
-        userPhot: user.photoURL,
+        userPhoto: user.photoURL,
         userCreated: user.metadata.createdAt,
       };
       const response = await axiosPublic.post("/users", userInfo);

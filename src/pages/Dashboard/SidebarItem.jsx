@@ -38,6 +38,11 @@ export default function SidebarItem() {
                 Create A Post
               </Sidebar.Item>
             </Link>
+            <Link to="/dashboard/posts">
+              <Sidebar.Item icon={HiInbox} label="" as={"span"}>
+                Show Posts
+              </Sidebar.Item>
+            </Link>
             <Link to="/dashboard/comment">
               <Sidebar.Item icon={HiInbox} label="3" as={"span"}>
                 comment
