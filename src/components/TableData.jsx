@@ -2,11 +2,13 @@ import { Button, TableBody, TableCell, TableRow } from "flowbite-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function TableData({ contentsOfTable }) {
+export default function TableData({ contentsOfTable, handleDelete }) {
   return (
     <TableBody className="">
       <TableRow className="bg-white ">
-        <TableCell>{contentsOfTable.createdAt}</TableCell>
+        <TableCell>
+          {new Date(contentsOfTable?.createdAt).toLocaleString()}
+        </TableCell>
         <TableCell>
           <Link to="/">
             <img
@@ -19,7 +21,10 @@ export default function TableData({ contentsOfTable }) {
         <TableCell>{contentsOfTable.title}</TableCell>
         <TableCell>{contentsOfTable.category}</TableCell>
         <TableCell>
-          <span className="font-medium text-red-500 hover:underline text-xs cursor-pointer">
+          <span
+            onClick={() => handleDelete(contentsOfTable._id)}
+            className="font-medium text-red-500 hover:underline text-xs cursor-pointer"
+          >
             Delete
           </span>
         </TableCell>
