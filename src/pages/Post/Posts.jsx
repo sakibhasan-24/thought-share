@@ -9,23 +9,25 @@ import {
   TableHeadCell,
 } from "flowbite-react";
 import TableData from "../../components/TableData";
+import { useShowPost } from "../../apiCallHooks/showPost";
 
-const axiosSecure = useAxiosSecure();
+// const axiosSecure = useAxiosSecure();
 
 export default function Posts() {
-  const {
-    data: posts,
-    refetch,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["posts"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/posts");
-      // console.log(res.data);
-      return res.data;
-    },
-  });
+  // const {
+  //   data: posts,
+  //   refetch,
+  //   isLoading,
+  //   isError,
+  // } = useQuery({
+  //   queryKey: ["posts"],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get("/posts");
+  //     // console.log(res.data);
+  //     return res.data;
+  //   },
+  // });
+  const { posts, isError, isLoading, refetch } = useShowPost();
   if (isLoading) {
     return <Spinner />;
   }

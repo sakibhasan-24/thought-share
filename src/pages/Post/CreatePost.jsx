@@ -6,10 +6,12 @@ import useAxiosPublic from "../../apiCallHooks/useAxiosPublic";
 import useAxiosSecure from "../../apiCallHooks/useAxiosSecure";
 import useAuth from "../../hook/useAuth";
 import Swal from "sweetalert2";
+import { useShowPost } from "../../apiCallHooks/showPost";
 export default function CreatePost() {
   const { user } = useAuth();
   const [imageFile, setImageFile] = useState(null);
 
+  const { refetch } = useShowPost();
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const image_key = import.meta.env.VITE_IMAGE_API_KEY;
@@ -46,6 +48,7 @@ export default function CreatePost() {
     const res = await axiosSecure.post("/create-post", userPostData);
     // console.log(res);
     if (res.data.insertedId) {
+      refetch();
       Swal.fire({
         icon: "success",
         title: "Post created successfully",
@@ -53,6 +56,7 @@ export default function CreatePost() {
         timer: 1500,
       });
     }
+
     setLoading(false);
     // setImageFile(null);
     // setFormData({});

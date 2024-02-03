@@ -10,9 +10,13 @@ import {
 import { Sidebar } from "flowbite-react";
 import useAuth from "../../hook/useAuth";
 import { Link } from "react-router-dom";
+import { useShowPost } from "../../apiCallHooks/showPost";
 
 export default function SidebarItem() {
   const { user } = useAuth();
+  const { posts } = useShowPost();
+
+  // console.log(posts.totalPost);
   return (
     <div className="p-2 rounded-lg m-6">
       <Sidebar aria-label="Default sidebar example">
@@ -39,7 +43,7 @@ export default function SidebarItem() {
               </Sidebar.Item>
             </Link>
             <Link to="/dashboard/posts">
-              <Sidebar.Item icon={HiInbox} label="" as={"span"}>
+              <Sidebar.Item icon={HiInbox} label={posts?.totalPost} as={"span"}>
                 Show Posts
               </Sidebar.Item>
             </Link>
