@@ -49,7 +49,7 @@ export default function Posts() {
   // };
   // console.log(posts);
   const handleDelete = (id) => {
-    console.log("deleted", id);
+    // console.log("deleted", id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

@@ -9,6 +9,7 @@ import Signup from "../pages/Registration/Signup";
 import Profile from "../pages/Dashboard/Profile";
 import CreatePost from "../pages/Post/CreatePost";
 import Posts from "../pages/Post/Posts";
+import Edit from "../pages/Dashboard/Edit";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
           {
             path: "posts",
             element: <Posts />,
+          },
+          {
+            path: "edit/:id",
+            element: <Edit />,
           },
         ],
       },

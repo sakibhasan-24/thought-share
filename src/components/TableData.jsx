@@ -29,7 +29,7 @@ export default function TableData({ contentsOfTable, handleDelete }) {
           </span>
         </TableCell>
         <TableCell>
-          <Link to={`/`}>
+          <Link to={`/dashboard/edit/${contentsOfTable._id}`}>
             <span className="font-medium text-green-500 hover:underline text-xs cursor-pointer">
               edit
             </span>
