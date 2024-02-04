@@ -10,6 +10,8 @@ import Profile from "../pages/Dashboard/Profile";
 import CreatePost from "../pages/Post/CreatePost";
 import Posts from "../pages/Post/Posts";
 import Edit from "../pages/Dashboard/Edit";
+import Users from "../pages/Dashboard/Users";
+import Protected from "./Protected";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <Protected>
+            <Dashboard />
+          </Protected>
+        ),
         children: [
           {
             path: "profile",
@@ -53,6 +59,10 @@ const router = createBrowserRouter([
           {
             path: "edit/:id",
             element: <Edit />,
+          },
+          {
+            path: "users",
+            element: <Users />,
           },
         ],
       },

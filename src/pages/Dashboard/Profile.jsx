@@ -18,15 +18,17 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import app from "../../firebase/firebase.config";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const { user } = useAuth();
+  const { user, userLogOut } = useAuth();
   const [isEdit, setIsEdit] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [imageProgress, setImageProgress] = useState(0);
   const [imageUploadError, setImageUploadError] = useState(null);
-
+  const navigate = useNavigate();
   const showEditForm = () => {
     setIsEdit(!isEdit);
   };
@@ -34,6 +36,17 @@ export default function Profile() {
 
   // task-1 upload image and get an url
 
+  const handleSignOut = () => {
+    userLogOut().then(() => {
+      Swal.fire({
+        icon: "success",
+        title: "Logout Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+    navigate("/login");
+  };
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     // console.log(file);
@@ -102,6 +115,7 @@ export default function Profile() {
             </Dropdown.Item>
             <Dropdown.Item as="div">
               <Button
+                onClick={handleSignOut}
                 color="warning"
                 className="block px-2 py-1 text-sm text-white-600 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
               >

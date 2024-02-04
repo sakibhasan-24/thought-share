@@ -15,7 +15,6 @@ export default function useAxiosSecure() {
       return config;
     },
     (error) => {
-      alert("error");
       return Promise.reject(error);
     }
   );
@@ -25,8 +24,13 @@ export default function useAxiosSecure() {
       return response;
     },
     (error) => {
-      if (error.response.status === 401 || error.response.status === 403) {
+      if (
+        !token ||
+        error.response.status === 401 ||
+        error.response.status === 403
+      ) {
         console.log("Unauthorized", error);
+        window.location.href = "/login";
       }
       return Promise.reject(error);
     }

@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
@@ -27,7 +28,6 @@ export default function AuthProvider({ children }) {
   };
 
   const userLogIn = (email, password) => {
-    
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -41,6 +41,10 @@ export default function AuthProvider({ children }) {
     setLoading(true);
     return updateProfile(auth.currentUser, { displayName, photoURL });
   };
+  const userLogOut = () => {
+    setLoading(false);
+    return signOut(auth);
+  };
   const value = {
     loading,
     user,
@@ -49,12 +53,13 @@ export default function AuthProvider({ children }) {
     googleLogIn,
     updateUser,
     userLogIn,
+    userLogOut,
   };
 
   useEffect(() => {
     const clearMemory = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        setLoading(true);
+        setLoading(false);
         setUser(currentUser);
         const res = await axiosPublic.post("/jwt", currentUser);
         localStorage.setItem("token", res.data.token);
