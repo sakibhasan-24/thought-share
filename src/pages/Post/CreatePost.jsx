@@ -61,7 +61,7 @@ export default function CreatePost() {
     // setImageFile(null);
     // setFormData({});
   };
-  console.log(formData);
+  // console.log(formData);
   const isButtonDisabled =
     formData?.image === null || formData?.image === undefined ? true : false;
   //   console.log(isButtonDisabled);

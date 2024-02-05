@@ -18,6 +18,7 @@ export default function Posts() {
   const query = useQueryClient();
   const [showMore, setShowMore] = useState(true);
 
+  // localStorage.removeItem("token");
   // const {
   //   data: posts,
   //   refetch,
@@ -60,9 +61,14 @@ export default function Posts() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axiosSecure.delete(`/posts/${id}`);
-        refetch();
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        const res = await axiosSecure.delete(`/posts/${id}`);
+        console.log(res.data);
+        if (res.data.success === false) {
+          Swal.fire("Error!", "Something went wrong.", "error");
+        } else {
+          refetch();
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
       }
     });
   };

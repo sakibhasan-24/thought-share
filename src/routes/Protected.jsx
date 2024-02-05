@@ -6,9 +6,10 @@ import { Spinner } from "flowbite-react";
 export default function Protected({ children }) {
   const location = useLocation();
   const { user, loading } = useAuth();
-  console.log(loading);
+  // console.log(user);
+  // console.log(loading);
   if (loading) {
-    return <div>Loading</div>;
+    return <Spinner />;
   }
   if (user) {
     return children;

@@ -9,7 +9,13 @@ export default function UserTable({ contentsOfTable }) {
         <TableCell>
           {new Date(parseInt(contentsOfTable?.userCreated)).toLocaleString()}
         </TableCell>
-        <TableCell>img</TableCell>
+        <TableCell>
+          <img
+            className="w-10 h-10 rounded-full border-2 border-gray-300 object-cover"
+            src={contentsOfTable?.userPhoto || contentsOfTable?.userPhot}
+            alt="img"
+          />
+        </TableCell>
         <TableCell>{contentsOfTable?.email}</TableCell>
         <TableCell>
           <span className="text-red-700 hover:underline cursor-pointer ">

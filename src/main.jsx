@@ -11,9 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <HelmetProvider>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
+        <App />
       </HelmetProvider>
     </AuthProvider>
   </QueryClientProvider>

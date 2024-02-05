@@ -12,8 +12,8 @@ export const useShowUser = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
+      console.log(localStorage.getItem("token"));
       const res = await axiosSecure.get("/users");
-
       return res.data;
     },
   });

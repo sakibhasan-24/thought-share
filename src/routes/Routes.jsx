@@ -12,6 +12,7 @@ import Posts from "../pages/Post/Posts";
 import Edit from "../pages/Dashboard/Edit";
 import Users from "../pages/Dashboard/Users";
 import Protected from "./Protected";
+import ApplyForm from "../pages/Dashboard/premiumUser/ApplyForm";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
           {
             path: "users",
             element: <Users />,
+          },
+          {
+            path: "apply",
+            element: <ApplyForm />,
           },
         ],
       },
