@@ -1,80 +1,66 @@
-import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
-import useAuth from "../../hook/useAuth";
+
 export default function Header() {
   const location = useLocation();
-
-  const { user } = useAuth();
   return (
-    <Navbar className="border-b-2 border-sky-200 sm:p-4">
-      <Link className="font-bold text-xs sm:text-xl " to="/">
-        Thought
-        <span className="bg-[#5cbdb9] px-1 rounded-xl sm:text-2xl dark:text-slate-300 mx-0">
-          Share
-        </span>
+    <Navbar fluid rounded className="bg-slate-900 p-6 rounded-lg">
+      <Link to="/" className="font-semibold flex items-center">
+        <span>Thought</span>
+        <span className="text-orange-800 sm:text-3xl">Share</span>
       </Link>
-      <form>
-        <TextInput
-          className="hidden sm:inline"
-          type="text"
-          placeholder="search..."
-          rightIcon={AiOutlineSearch}
-        />
-        <Button className="rounded-full sm:hidden w-8 h-8">
-          <AiOutlineSearch />
-        </Button>
-      </form>
-      <div className="flex gap-2 md:order-2">
-        <Button className="w-8 h-8 sm:w-10 sm:h-10">
-          <FaMoon />
-        </Button>
-        {user ? (
-          <>
-            <Dropdown
-              arrowIcon={false}
-              inline
-              label={<Avatar alt="user img" img={user?.photoURL} rounded />}
-            >
-              <Dropdown.Header className="font-semibold space-y-4">
-                <span className="block text-sm">{user?.displayName}</span>
-                <span className="block text-sm truncate mt-2">
-                  {user?.email}
-                </span>
-                <Link
-                  className="block text-sm truncate mt-2"
-                  to="/dashboard/profile"
-                >
-                  <Dropdown.Item>Profile</Dropdown.Item>
-                </Link>
-                <Link to="/login">
-                  <button className="block text-sm truncate cursor-pointer mt-2">
-                    Logout
-                  </button>
-                </Link>
-              </Dropdown.Header>
-            </Dropdown>
-          </>
-        ) : (
-          <>
-            <Link to="/signup">
-              <Button gradientDuoTone="greenToBlue">SignUp</Button>
-            </Link>
-          </>
-        )}
+
+      {/* dynamic */}
+      <div className="flex md:order-2">
+        <Dropdown
+          arrowIcon={false}
+          inline
+          label={
+            <Avatar
+              alt="User settings"
+              img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+              rounded
+            />
+          }
+        >
+          <Dropdown.Header>
+            <span className="block text-sm">Bonnie Green</span>
+            <span className="block truncate text-sm font-medium">
+              name@flowbite.com
+            </span>
+          </Dropdown.Header>
+          <Dropdown.Item>Dashboard</Dropdown.Item>
+          <Dropdown.Item>Settings</Dropdown.Item>
+          <Dropdown.Item>Earnings</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item>Sign out</Dropdown.Item>
+        </Dropdown>
         <Navbar.Toggle />
       </div>
+      <div>
+        {/* <form className="form-control">
+          <input
+            type="text"
+            placeholder="Search"
+            className="input input-bordered sm:w-24 md:w-auto"
+          />
+        </form> */}
+      </div>
       <Navbar.Collapse>
-        <Navbar.Link as={"div"} active={location.pathname === "/"}>
-          <Link to="/">Home</Link>
+        <Navbar.Link active={location.pathname === "/login"} as={"div"}>
+          <Link className="cursor-pointer text-xl font-bold" to="/login">
+            Login
+          </Link>
         </Navbar.Link>
-        <Navbar.Link as={"div"} active={location.pathname === "/about"}>
-          <Link to="/about">About</Link>
-        </Navbar.Link>
-        <Navbar.Link as={"div"} active={location.pathname === "/projects"}>
-          <Link to="/projects">Projects</Link>
+        <Navbar.Link active={location.pathname === "/projects"} as={"div"}>
+          <Link
+            active={location.pathname === "/projects"}
+            className="cursor-pointer text-xl font-bold"
+            to="/projects"
+          >
+            projects
+          </Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
