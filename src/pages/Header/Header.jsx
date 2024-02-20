@@ -54,11 +54,7 @@ export default function Header() {
           </Link>
         </Navbar.Link>
         <Navbar.Link active={location.pathname === "/projects"} as={"div"}>
-          <Link
-            active={location.pathname === "/projects"}
-            className="cursor-pointer text-xl font-bold"
-            to="/projects"
-          >
+          <Link className="cursor-pointer text-xl font-bold" to="/projects">
             projects
           </Link>
         </Navbar.Link>
