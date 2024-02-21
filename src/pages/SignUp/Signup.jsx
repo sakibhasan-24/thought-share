@@ -54,7 +54,7 @@ export default function Signup() {
     }
     const res = await saveUserWhileSignUp(data);
     //
-    console.log(res);
+    // console.log(res);
     if (res.success === false) {
       Swal.fire({
         icon: "error",
