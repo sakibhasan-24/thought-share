@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 export default function Header() {
   const location = useLocation();
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  // console.log(currentUser);
   const [themeNumber, setThemeNumber] = useState(0);
   const ariaLevel = ["Default", "Retro", "Cyberpunk", "Valentine", "Aqua"];
   const value = ["default", "retro", "cyberpunk", "valentine", "aqua"];
@@ -41,8 +41,12 @@ export default function Header() {
                 {currentUser?.email}
               </span>
             </Dropdown.Header>
-            <Dropdown.Item>Dashboard</Dropdown.Item>
-            <Dropdown.Item>Settings</Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/dashboard/profile">Dashboard</Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/dashboard/profile">Profile</Link>
+            </Dropdown.Item>
             <Dropdown.Item>Earnings</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item>Sign out</Dropdown.Item>
