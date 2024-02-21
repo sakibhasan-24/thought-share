@@ -1,8 +1,30 @@
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import useAxiosPublic from "../../hook/useAxiosPublic";
 
 export default function Profile() {
   const { currentUser } = useSelector((state) => state.user);
-
+  const IMAGE_HOISTING = import.meta.env.VITE_IMAGE_API_KEY;
+  const fileRef = useRef(null);
+  const IMAGE_URL = `https://api.imgbb.com/1/upload?key=${IMAGE_HOISTING}`;
+  const axiosPublic = useAxiosPublic();
+  const [imageFile, setImageFile] = useState(null);
+  const handleImageChange = async (e) => {
+    // setImageFile(e.target.files[0]);
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const res = await axiosPublic.post(IMAGE_URL, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      params: {
+        key: IMAGE_HOISTING,
+      },
+    });
+    setImageFile(res.data.data.display_url);
+  };
+  console.log(imageFile);
   return (
     <div className="max-w-lg mx-auto">
       <div>
@@ -14,11 +36,19 @@ export default function Profile() {
         </h1>
         <div className="max-w-xl mx-auto p-4 rounded-lg shadow-2xl shadow-blue-950">
           <div>
+            <input
+              type="file"
+              onChange={handleImageChange}
+              accept="images/*"
+              ref={fileRef}
+              hidden
+            />
             <img
-              src={currentUser?.profilePicture}
+              src={imageFile || currentUser?.profilePicture}
               alt="userImage"
               className="rounded-full w-[80px] h-[80px] mx-auto mt-4 object-cover cursor-pointer"
               title="Change Profile Picture"
+              onClick={() => fileRef.current.click()}
             />
           </div>
           <div>
