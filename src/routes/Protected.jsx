@@ -4,11 +4,12 @@ import { Navigate } from "react-router-dom";
 
 export default function Protected({ children }) {
   const { currentUser, loading } = useSelector((state) => state.user);
+  //   console.log(loading, currentUser);
   if (loading) {
     return <div>Loading...</div>;
   }
   if (currentUser) {
-    children;
+    return children;
   }
   return <Navigate to="/login" />;
 }
