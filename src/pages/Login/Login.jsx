@@ -4,18 +4,26 @@ import { Link } from "react-router-dom";
 import useLogIn from "../../hook/useLogIn";
 // import { Toast } from "flowbite-react";
 import Swal from "sweetalert2";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginStart,
+  loginFailure,
+  loginSuccess,
+} from "../../redux/store/userSlice";
 export default function Login() {
-  const [loading, setLoading] = useState(false);
+  //   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.user);
   const { logIn } = useLogIn();
   const [formData, setFormData] = useState({});
   const handleLogIn = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    dispatch(loginSuccess());
     try {
       //   console.log(formData);
       const res = await logIn(formData.email, formData.password);
+      dispatch(loginSuccess(res));
       Swal.fire({
         icon: "success",
         title: "Logged in successfully",
@@ -29,7 +37,7 @@ export default function Login() {
         text: `${error.response.data.message}`,
       });
     } finally {
-      setLoading(false);
+      dispatch(loginFailure());
     }
   };
 
@@ -60,11 +68,20 @@ export default function Login() {
             onChange={handleOnChange}
           />
 
-          <input
-            type="submit"
-            value="login"
-            className="w-full bg-slate-900 px-4 py-4 rounded-lg cursor-pointer text-slate-50 font-bold uppercase hover:bg-slate-600"
-          />
+          {loading ? (
+            <input
+              type="submit"
+              value="loading...."
+              disabled={true}
+              className="w-full bg-slate-900 px-4 py-4 rounded-lg cursor-pointer text-slate-50 font-bold uppercase hover:bg-slate-600"
+            />
+          ) : (
+            <input
+              type="submit"
+              value="login"
+              className="w-full bg-slate-900 px-4 py-4 rounded-lg cursor-pointer text-slate-50 font-bold uppercase hover:bg-slate-600"
+            />
+          )}
           <GoogleSignUpButton />
         </div>
       </form>
