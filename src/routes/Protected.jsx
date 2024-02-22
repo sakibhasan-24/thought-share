@@ -6,7 +6,7 @@ export default function Protected({ children }) {
   const { currentUser, loading } = useSelector((state) => state.user);
   //   console.log(loading, currentUser);
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loadin sssg...</div>;
   }
   if (currentUser) {
     return children;

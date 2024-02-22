@@ -16,12 +16,17 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailed,
+  logOutSuccess,
 } from "../../redux/store/userSlice";
 import userDelete from "../../hook/userDelete";
+import useLogOut from "../../hook/useLogOut";
+import { useNavigate } from "react-router-dom";
 export default function Profile() {
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [email, setEmail] = useState("");
 
+  const { logOut } = useLogOut();
   function onCloseModal() {
     setOpenModal(false);
     setEmail("");
@@ -138,6 +143,23 @@ export default function Profile() {
       setLoading(false);
     }
   };
+  const handleLogOut = async (id) => {
+    try {
+      const res = await logOut(id);
+      dispatch(logOutSuccess(res));
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Logged out successfully",
+      });
+      navigate("/login");
+    } catch (error) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-lg mx-auto">
       <div>
@@ -212,7 +234,10 @@ export default function Profile() {
               />
             </form>
             <div className="flex items-center justify-between">
-              <button className="bg-orange-700 text-slate-300 px-4 py-2 rounded-lg">
+              <button
+                onClick={() => handleLogOut(currentUser?._id)}
+                className="bg-orange-700 text-slate-300 px-4 py-2 rounded-lg"
+              >
                 SignOut
               </button>
               <>
