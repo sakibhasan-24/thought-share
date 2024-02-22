@@ -19,8 +19,9 @@ export default function GoogleSignUpButton() {
     setLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log(result.user);
+      // console.log(result.user);
       // save in db
+
       const res = await axiosPublic.post("/api/users/google", {
         userName: result?.user.displayName,
         email: result?.user.email,
@@ -29,7 +30,7 @@ export default function GoogleSignUpButton() {
       dispatch(loginSuccess(res.data));
       console.log(res);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
     }
