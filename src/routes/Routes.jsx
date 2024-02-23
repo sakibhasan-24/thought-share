@@ -11,6 +11,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Protected from "./Protected";
 import AdminRoute from "./AdminRoute";
 import CreatePost from "../pages/post/createPost/CreatePost";
+import Posts from "../pages/posts/Posts";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
             element: (
               <AdminRoute>
                 <CreatePost />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "/dashboard/posts",
+            element: (
+              <AdminRoute>
+                <Posts />
               </AdminRoute>
             ),
           },

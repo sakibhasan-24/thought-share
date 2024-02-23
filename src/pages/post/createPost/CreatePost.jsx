@@ -81,7 +81,8 @@ export default function CreatePost() {
         title: "Post Created Successfully",
         timer: 1500,
       });
-      //   navigate("/");
+      navigate(`/post-details/${savedData?.title}/${savedData?._id}`);
+      //   navigate();
     }
   };
   return (

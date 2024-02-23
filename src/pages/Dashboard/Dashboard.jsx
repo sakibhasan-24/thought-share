@@ -31,8 +31,8 @@ export default function Dashboard() {
     }
   };
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-3">
+    <div className="grid grid-cols-1  md:grid-cols-12">
+      <div className="md:col-span-3">
         <Sidebar aria-label="Default sidebar example">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
@@ -60,6 +60,19 @@ export default function Dashboard() {
                   Profile
                 </Link>
               </Sidebar.Item>
+              {currentUser && currentUser?.isAdmin && (
+                <Sidebar.Item icon={HiInbox} label="3" as={"div"}>
+                  <Link
+                    className={`${
+                      handleRoute(`/dashboard/posts`) &&
+                      "bg-gray-400 px-4 py-2 rounded-md"
+                    }`}
+                    to="/dashboard/posts"
+                  >
+                    Posts
+                  </Link>
+                </Sidebar.Item>
+              )}
               <Sidebar.Item icon={HiInbox} label="3" as={"div"}>
                 Inbox
               </Sidebar.Item>
@@ -86,7 +99,7 @@ export default function Dashboard() {
           </Sidebar.Items>
         </Sidebar>
       </div>
-      <div className="col-span-9">
+      <div className="md:col-span-9">
         <Outlet />
       </div>
     </div>
