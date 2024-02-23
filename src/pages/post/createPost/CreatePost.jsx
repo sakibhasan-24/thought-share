@@ -16,8 +16,13 @@ import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import app from "../../../firebase/firebase.config";
+import useCreatePost from "../../../hook/useCreatePost";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
+  const navigate = useNavigate();
+  const { postLoading, createPost } = useCreatePost();
   const [imageUrl, setImageUrl] = useState(null);
   const [upload, setUpload] = useState(0);
   const [openModal, setOpenModal] = useState(false);
@@ -64,19 +69,43 @@ export default function CreatePost() {
       setOpenModal(false);
     }
   }, [imageUrl]);
+  //   console.log(formData);
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    // console.log(formData);
+    const savedData = await createPost(formData);
+    // console.log(savedData);
+    if (savedData) {
+      Swal.fire({
+        icon: "success",
+        title: "Post Created Successfully",
+        timer: 1500,
+      });
+      //   navigate("/");
+    }
+  };
   return (
     <div className="min-h-screen p-4 max-w-3xl mx-auto ">
       <h1 className="text-2xl font-bold mb-4 text-center">Create a Post</h1>
       <div>
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-6" onSubmit={handleSubmitForm}>
           <div className="flex flex-col sm:flex-row justify-between gap-4">
             <TextInput
               type="text"
               required
               placeholder="Title"
               className="flex-1"
+              id="title"
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
             />
-            <Select>
+            <Select
+              id="category"
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+            >
               <option value="uncategorized">Select A category</option>
               <option value="educational">Educational</option>
               <option value="entertainment">Entertainment</option>
@@ -93,7 +122,6 @@ export default function CreatePost() {
           <div className="px-4 py-6 border-2 border-blue-600 border-dashed">
             <FileInput
               type="file"
-              required
               accept="image/*"
               onChange={handleImageUpload}
             />
@@ -131,9 +159,22 @@ export default function CreatePost() {
               </>
             )}
             {/* end of modal */}
-            {imageUrl && <img src={imageUrl} alt="h" />}
+            {imageUrl && (
+              <div>
+                <img
+                  src={imageUrl}
+                  alt="img"
+                  className="w-full rounded-md p-4"
+                />
+                <Button onClick={() => setImageUrl(null)}>Delete</Button>
+              </div>
+            )}
           </div>
-          <ReactQuill theme="snow" placeholder="write your post" />
+          <ReactQuill
+            theme="snow"
+            placeholder="write your post"
+            onChange={(value) => setFormData({ ...formData, content: value })}
+          />
           <Button type="submit" outline gradientDuoTone="pinkToOrange">
             Create A post
           </Button>
