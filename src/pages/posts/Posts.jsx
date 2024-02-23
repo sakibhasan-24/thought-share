@@ -7,7 +7,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 export default function Posts() {
   const { currentUser } = useSelector((state) => state.user);
-  const { loading, posts, getPosts } = useGetPosts();
+  const { loading, posts, getPosts, handleShowAllPosts, showMoreButton } =
+    useGetPosts();
   useEffect(() => {
     if (currentUser?.isAdmin) {
       getPosts();
@@ -62,6 +63,14 @@ export default function Posts() {
               </Table.Body>
             ))}
           </Table>
+          {showMoreButton && (
+            <button
+              onClick={handleShowAllPosts}
+              className="bg-slate-800 my-6  text-white rounded-lg font-semibold px-4 py-2   mx-auto"
+            >
+              Show More
+            </button>
+          )}
         </>
       ) : (
         <>
