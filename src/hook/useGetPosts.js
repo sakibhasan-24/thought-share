@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useAxiosPublic from "./useAxiosPublic";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 export default function useGetPosts() {
   const axiosPublic = useAxiosPublic();
@@ -45,5 +46,53 @@ export default function useGetPosts() {
       setLoading(false);
     }
   };
-  return { loading, posts, getPosts, showMoreButton, handleShowAllPosts };
+  const handleDeletePost = async (postId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        try {
+          //   console.log(postId, currentUser?._id);
+          const res = await axiosPublic.delete(
+            `/api/post/deletePost/${postId}/${currentUser?._id}`
+          );
+          //   console.log(`/api/post/deletePost/${postId}/${currentUser?._id}`);
+          //   console.log(res);
+          if (res.data.success) {
+            Swal.fire("Deleted!", "Your post has been deleted.", "success");
+          }
+          //   setPosts((prev) => prev.posts?.filter((post) => post._id !== postId));
+          //   const remainingPosts = posts.posts?.filter(
+          //     (post) => post._id !== postId
+          //   );
+          //   //   setPosts(remainingPosts);
+          //   console.log(remainingPosts);
+          setPosts((prev) => ({
+            ...prev,
+            posts: prev.posts.filter((post) => post._id !== postId),
+          }));
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    });
+  };
+
+  return {
+    loading,
+    posts,
+    getPosts,
+    showMoreButton,
+    handleShowAllPosts,
+    handleDeletePost,
+  };
 }

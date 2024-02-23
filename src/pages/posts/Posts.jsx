@@ -7,8 +7,14 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 export default function Posts() {
   const { currentUser } = useSelector((state) => state.user);
-  const { loading, posts, getPosts, handleShowAllPosts, showMoreButton } =
-    useGetPosts();
+  const {
+    loading,
+    posts,
+    getPosts,
+    handleShowAllPosts,
+    showMoreButton,
+    handleDeletePost,
+  } = useGetPosts();
   useEffect(() => {
     if (currentUser?.isAdmin) {
       getPosts();
@@ -52,7 +58,10 @@ export default function Posts() {
                   </Table.Cell>
                   <Table.Cell>{post?.category}</Table.Cell>
                   <Table.Cell>
-                    <FaRegTrashAlt className="cursor-pointer hover:text-red-600 text-2xl" />
+                    <FaRegTrashAlt
+                      onClick={() => handleDeletePost(post?._id)}
+                      className="cursor-pointer hover:text-red-600 text-2xl"
+                    />
                   </Table.Cell>
                   <Table.Cell>
                     <Link to={""}>
