@@ -38,11 +38,8 @@ export default function Dashboard() {
             <Sidebar.ItemGroup>
               <Sidebar.Item icon={HiChartPie} as={"div"}>
                 <Link
-                  className={`${
-                    handleRoute(`/dashboard/profile`) &&
-                    "bg-gray-900 text-white px-4 py-2 rounded-md"
-                  }`}
-                  to="/dashboard/profile"
+                  className={`${"bg-gray-900 text-white px-4 py-2 rounded-md"}`}
+                  to="/dashboard"
                 >
                   Dashboard
                 </Link>
@@ -69,9 +66,11 @@ export default function Dashboard() {
               <Sidebar.Item icon={HiUser} as={"div"}>
                 Users
               </Sidebar.Item>
-              <Sidebar.Item icon={HiShoppingBag} as={"div"}>
-                Products
-              </Sidebar.Item>
+              {currentUser && currentUser?.isAdmin && (
+                <Sidebar.Item icon={HiShoppingBag} as={"div"}>
+                  <Link to="/dashboard/create-post">Create A post</Link>
+                </Sidebar.Item>
+              )}
               <Sidebar.Item
                 icon={HiArrowSmRight}
                 className="cursor-pointer"

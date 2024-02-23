@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.ql-toolbar {
+  background-color: #528fc8; /* Set toolbar background color */
+  border: none; /* Remove toolbar border */
+}
+
+.ql-editor {
+  min-height: 300px; /* Set minimum height for editor */
+  font-family: Arial, sans-serif; /* Set font family */
+  font-size: 16px; /* Set font size */
+  color: #333; /* Set text color */
+}
+
+.ql-toolbar button {
+  color: #333; /* Set button color */
+}
