@@ -64,7 +64,7 @@ export default function Posts() {
                     />
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={""}>
+                    <Link to={`/dashboard/edit/${post?._id}`}>
                       <CiEdit className="cursor-pointer hover:text-green-600 text-2xl" />
                     </Link>
                   </Table.Cell>

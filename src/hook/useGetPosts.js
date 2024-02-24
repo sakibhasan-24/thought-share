@@ -17,6 +17,7 @@ export default function useGetPosts() {
         `/api/post/get-posts?userId=${currentUser?._id}`
       );
       setPosts(res.data);
+      if (res.data.posts.length < 9) setShowMoreButton(false);
     } catch (error) {
       console.log(error);
     } finally {
@@ -78,6 +79,7 @@ export default function useGetPosts() {
             ...prev,
             posts: prev.posts.filter((post) => post._id !== postId),
           }));
+          if (posts?.posts?.length < 9) setShowMoreButton(false);
         } catch (error) {
           console.log(error);
         } finally {
