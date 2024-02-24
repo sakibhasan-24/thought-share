@@ -13,6 +13,7 @@ import AdminRoute from "./AdminRoute";
 import CreatePost from "../pages/post/createPost/CreatePost";
 import Posts from "../pages/posts/Posts";
 import Edit from "../pages/EditPost/Edit";
+import Users from "../pages/users/Users";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,14 @@ const router = createBrowserRouter([
             element: (
               <AdminRoute>
                 <Edit />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "/dashboard/users",
+            element: (
+              <AdminRoute>
+                <Users />
               </AdminRoute>
             ),
           },
