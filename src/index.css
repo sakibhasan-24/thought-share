@@ -16,3 +16,22 @@
 .ql-toolbar button {
   color: #333; /* Set button color */
 }
+.post p {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.post h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0;
+}
+.post h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.25rem 0;
+}
+.post a {
+  color: #528fc8;
+  text-decoration: none;
+}

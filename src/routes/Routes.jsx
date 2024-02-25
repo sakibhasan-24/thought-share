@@ -14,6 +14,7 @@ import CreatePost from "../pages/post/createPost/CreatePost";
 import Posts from "../pages/posts/Posts";
 import Edit from "../pages/EditPost/Edit";
 import Users from "../pages/users/Users";
+import PostDetails from "../components/PostDetails";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/posts/:postTitle/:postId",
+        element: <PostDetails />,
       },
       {
         path: "/dashboard",

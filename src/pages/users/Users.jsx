@@ -16,7 +16,7 @@ export default function Users() {
   //     showMoreButton,
   //     handleDeletePost,
   //   } = useGetPosts();
-  const { getUsers, users } = useGetUsers();
+  const { getUsers, users, handleDeleteuser } = useGetUsers();
 
   useEffect(() => {
     if (currentUser?.isAdmin) {
