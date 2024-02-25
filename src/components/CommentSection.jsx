@@ -5,12 +5,15 @@ import { Link } from "react-router-dom";
 import useCommentCreate from "../hook/useCommentCreate";
 import useGetComments from "../hook/useGetComments";
 import Comment from "./Comment";
+import useLike from "../hook/useLike";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   //   const [comment, setComment] = useState("");
   const { loading, createComment, setComment, comment } = useCommentCreate();
-  const { comments, getComments } = useGetComments();
+  const { comments, getComments, setComments } = useGetComments();
+  const [newComments, setNewComments] = useState(comments);
+  const { handleLikeAction } = useLike();
   const handleSubmitComment = async (e) => {
     e.preventDefault();
     const comments = await createComment(postId);
@@ -18,14 +21,51 @@ export default function CommentSection({ postId }) {
       setComment("");
     }
   };
+  //   console.log(comments);
   useEffect(() => {
     getComments(postId);
-  }, [postId]);
+  }, [postId, comments]);
+  //   console.log(comments);
+
+  const handleLike = async (id) => {
+    if (!currentUser) {
+      return;
+    }
+    const res = await handleLikeAction(id);
+    // console.log(res);
+    // console.log(id);
+    // if (res.success) {
+    //   //   console.log(res);
+    //   const updatedComments = comments?.map((comment) =>
+    //     comment._id === id
+    //       ? {
+    //           ...comment,
+    //           likes: res.data?.comment?.likes,
+    //           numberOfLikes: res.data?.comment?.likes.length,
+    //         }
+    //       : comment
+    //   );
+    //   setComments(updatedComments);
+    // }
+
+    if (res.success) {
+      const updatedComments = comments?.map((comment) =>
+        comment._id === id
+          ? {
+              ...comment,
+              likes: res.data?.comment?.likes,
+              numberOfLikes: res.data?.comment?.likes.length,
+            }
+          : comment
+      );
+      setComments([...updatedComments]); // Create a new array with updated comments
+    }
+  };
   //   console.log(comments);
   return (
     <div className="max-w-3xl mx-auto w-full">
       <div>
-        {currentUser ? (
+        {currentUser && comments.length !== undefined ? (
           <>
             <p className="bg-slate-400 text-teal-500 font-semibold px-4 rounded-lg text-center">
               Comment As : {currentUser?.userName}
@@ -70,7 +110,11 @@ export default function CommentSection({ postId }) {
               </span>
             </div>
             {comments?.map((comment) => (
-              <Comment key={comment?._id} comment={comment} />
+              <Comment
+                key={comment?._id}
+                comment={comment}
+                handleLike={handleLike}
+              />
             ))}
           </>
         )}

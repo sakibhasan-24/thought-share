@@ -14,5 +14,5 @@ export default function useGetComments() {
       console.log(error);
     }
   };
-  return { comments, getComments };
+  return { comments, getComments, setComments };
 }
