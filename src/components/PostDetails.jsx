@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useAxiosPublic from "../hook/useAxiosPublic";
 import { Spinner } from "flowbite-react";
+import CommentSection from "./CommentSection";
 
 export default function PostDetails() {
   const { postTitle, postId } = useParams();
@@ -58,6 +59,8 @@ export default function PostDetails() {
         className="max-w-2xl mx-auto p-4 post"
         dangerouslySetInnerHTML={{ __html: post[0]?.content }}
       ></div>
+      {/* commnet section */}
+      <CommentSection postId={post[0]?._id} />
     </div>
   );
 }
