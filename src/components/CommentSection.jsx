@@ -52,26 +52,19 @@ export default function CommentSection({ postId }) {
   };
   //   console.log(comments);
   const handleEditComment = async (id, editedComment) => {
-    try {
-      const res = await axiosPublic.put(`api/comment/edit/comment/${id}`, {
-        comment: editedComment,
-      });
-      if (res.success) {
-        setComments(
-          comments.map((comment) =>
-            comment._id === id
-              ? {
-                  ...comment,
-                  comment: editedComment,
-                }
-              : comment
-          )
-        );
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    setComments(
+      comments.map((comment) =>
+        comment._id === id
+          ? {
+              ...comment,
+              comment: editedComment,
+            }
+          : comment
+      )
+    );
+    console.log(comments);
   };
+
   return (
     <div className="max-w-3xl mx-auto w-full">
       <div>

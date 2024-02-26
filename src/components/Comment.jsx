@@ -4,17 +4,34 @@ import useSingleUser from "../hook/useSingleUser";
 import moment from "moment";
 import { CiHeart } from "react-icons/ci";
 import { Button, Textarea } from "flowbite-react";
+import useAxiosPublic from "../hook/useAxiosPublic";
 
 export default function Comment({ comment, handleLike, handleEditComment }) {
   const { currentUser } = useSelector((state) => state.user);
   const { loading, getUser, user } = useSingleUser();
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState(comment?.comment);
+  const axiosPublic = useAxiosPublic();
   //   console.log(comment);
   useEffect(() => {
     getUser(comment?.userId);
   }, [comment?.userId]);
 
+  const handleSaveComment = async () => {
+    try {
+      // setIsEditing(false)
+      const res = await axiosPublic.put(
+        `/api/comment/edit/comment/${comment?._id}`,
+        { comment: editedComment }
+      );
+      if (res.data.success) {
+        handleEditComment(comment?._id, editedComment);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsEditing(false);
+  };
   return (
     <div className="my-6 border-b-2 p-2">
       <div className="flex items-center gap-1 space-x-2 font-semibold text-slate-600">
@@ -72,13 +89,7 @@ export default function Comment({ comment, handleLike, handleEditComment }) {
                   ></Textarea>
                   <div className="flex items-center justify-end gap-2">
                     <Button onClick={() => setIsEditing(false)}>cancel</Button>
-                    <Button
-                      onClick={() =>
-                        handleEditComment(comment?._id, editedComment)
-                      }
-                    >
-                      Save
-                    </Button>
+                    <Button onClick={handleSaveComment}>Save</Button>
                   </div>
                 </>
               )}
