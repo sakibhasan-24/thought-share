@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useSingleUser from "../hook/useSingleUser";
 import moment from "moment";
 import { CiHeart } from "react-icons/ci";
+import { Button, Textarea } from "flowbite-react";
 
-export default function Comment({ comment, handleLike }) {
+export default function Comment({ comment, handleLike, handleEditComment }) {
   const { currentUser } = useSelector((state) => state.user);
   const { loading, getUser, user } = useSingleUser();
-
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedComment, setEditedComment] = useState(comment?.comment);
+  //   console.log(comment);
   useEffect(() => {
     getUser(comment?.userId);
   }, [comment?.userId]);
@@ -43,6 +46,48 @@ export default function Comment({ comment, handleLike }) {
             `}
           />
         </button>
+        <div className=" flex  items-center space-x-2 gap-2 font-xs">
+          <p className="text-xs font-semibold ">
+            {comment?.numberOfLikes}
+            <span className="ml-1">
+              {comment?.numberOfLikes <= 1 ? "like" : "likes"}
+            </span>
+          </p>
+          {/* <p className="font-semibold text-xs hover:text-green-600 hover:underline cursor-pointer">
+            edit
+          </p> */}
+          {currentUser?._id && comment?.userId === currentUser._id ? (
+            <>
+              <p
+                className="cursor-pointer"
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                <span>edit</span>
+              </p>
+              {isEditing && (
+                <>
+                  <Textarea
+                    value={editedComment}
+                    onChange={(e) => setEditedComment(e.target.value)}
+                  ></Textarea>
+                  <div className="flex items-center justify-end gap-2">
+                    <Button onClick={() => setIsEditing(false)}>cancel</Button>
+                    <Button
+                      onClick={() =>
+                        handleEditComment(comment?._id, editedComment)
+                      }
+                    >
+                      Save
+                    </Button>
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            ""
+          )}
+          <p className="text-red-600 hover:underline cursor-pointer">delete</p>
+        </div>
       </div>
     </div>
   );

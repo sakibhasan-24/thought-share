@@ -6,13 +6,15 @@ import useCommentCreate from "../hook/useCommentCreate";
 import useGetComments from "../hook/useGetComments";
 import Comment from "./Comment";
 import useLike from "../hook/useLike";
+import useAxiosPublic from "../hook/useAxiosPublic";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   //   const [comment, setComment] = useState("");
   const { loading, createComment, setComment, comment } = useCommentCreate();
   const { comments, getComments, setComments } = useGetComments();
-  const [newComments, setNewComments] = useState(comments);
+
+  const axiosPublic = useAxiosPublic();
   const { handleLikeAction } = useLike();
   const handleSubmitComment = async (e) => {
     e.preventDefault();
@@ -24,44 +26,52 @@ export default function CommentSection({ postId }) {
   //   console.log(comments);
   useEffect(() => {
     getComments(postId);
-  }, [postId, comments]);
-  //   console.log(comments);
+  }, [postId]);
 
   const handleLike = async (id) => {
     if (!currentUser) {
       return;
     }
     const res = await handleLikeAction(id);
-    // console.log(res);
-    // console.log(id);
-    // if (res.success) {
-    //   //   console.log(res);
-    //   const updatedComments = comments?.map((comment) =>
-    //     comment._id === id
-    //       ? {
-    //           ...comment,
-    //           likes: res.data?.comment?.likes,
-    //           numberOfLikes: res.data?.comment?.likes.length,
-    //         }
-    //       : comment
-    //   );
-    //   setComments(updatedComments);
-    // }
-
+    // console.log(res.success);
     if (res.success) {
-      const updatedComments = comments?.map((comment) =>
-        comment._id === id
-          ? {
-              ...comment,
-              likes: res.data?.comment?.likes,
-              numberOfLikes: res.data?.comment?.likes.length,
-            }
-          : comment
+      //   console.log(res.comment.likes);
+      //   console.log(res.comment?.likes);
+      setComments(
+        comments.map((comment) =>
+          comment._id === id
+            ? {
+                ...comment,
+                likes: res.comment?.likes,
+                numberOfLikes: res.comment?.likes?.length,
+              }
+            : comment
+        )
       );
-      setComments([...updatedComments]); // Create a new array with updated comments
     }
   };
   //   console.log(comments);
+  const handleEditComment = async (id, editedComment) => {
+    try {
+      const res = await axiosPublic.put(`api/comment/edit/comment/${id}`, {
+        comment: editedComment,
+      });
+      if (res.success) {
+        setComments(
+          comments.map((comment) =>
+            comment._id === id
+              ? {
+                  ...comment,
+                  comment: editedComment,
+                }
+              : comment
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="max-w-3xl mx-auto w-full">
       <div>
@@ -99,7 +109,7 @@ export default function CommentSection({ postId }) {
       </div>
       {/* show all comments on this post */}
       <div>
-        {comments?.length === 0 ? (
+        {!comments || comments?.length === 0 ? (
           <p className="text-xs text-slate-700 font-bold">No comments yet</p>
         ) : (
           <>
@@ -109,13 +119,15 @@ export default function CommentSection({ postId }) {
                 {comments.length}
               </span>
             </div>
-            {comments?.map((comment) => (
-              <Comment
-                key={comment?._id}
-                comment={comment}
-                handleLike={handleLike}
-              />
-            ))}
+            {comments &&
+              comments?.map((comment) => (
+                <Comment
+                  key={comment?._id}
+                  comment={comment}
+                  handleLike={handleLike}
+                  handleEditComment={handleEditComment}
+                />
+              ))}
           </>
         )}
       </div>

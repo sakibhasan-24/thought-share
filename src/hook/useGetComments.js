@@ -9,7 +9,7 @@ export default function useGetComments() {
     try {
       const res = await axiosPublic(`/api/comment/getComments/${postId}`);
       //   console.log(res.data);
-      setComments(res.data.comments);
+      setComments(...comments, res.data.comments);
     } catch (error) {
       console.log(error);
     }
