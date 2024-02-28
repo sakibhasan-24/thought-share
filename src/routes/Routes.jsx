@@ -15,6 +15,7 @@ import Posts from "../pages/posts/Posts";
 import Edit from "../pages/EditPost/Edit";
 import Users from "../pages/users/Users";
 import PostDetails from "../components/PostDetails";
+import CommentsDash from "../pages/comments/CommentsDash";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
             path: "/dashboard/profile",
             element: <Profile></Profile>,
           },
+
           {
             path: "/dashboard/create-post",
             element: (
@@ -61,6 +63,10 @@ const router = createBrowserRouter([
                 <CreatePost />
               </AdminRoute>
             ),
+          },
+          {
+            path: "/dashboard/comments",
+            element: <CommentsDash />,
           },
           {
             path: "/dashboard/posts",

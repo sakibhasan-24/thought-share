@@ -87,7 +87,15 @@ export default function Dashboard() {
                 </Sidebar.Item>
               )}
               <Sidebar.Item icon={HiInbox} label="3" as={"div"}>
-                Inbox
+                <Link
+                  className={`${
+                    handleRoute(`/dashboard/comments`) &&
+                    "bg-gray-400 px-4 py-2 rounded-md"
+                  }`}
+                  to="/dashboard/comments"
+                >
+                  Comments
+                </Link>
               </Sidebar.Item>
               <Sidebar.Item icon={HiUser} as={"div"}>
                 Users
