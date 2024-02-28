@@ -42,7 +42,7 @@ export default function Header() {
               </span>
             </Dropdown.Header>
             <Dropdown.Item>
-              <Link to="/dashboard/profile">Dashboard</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </Dropdown.Item>
             <Dropdown.Item>
               <Link to="/dashboard/profile">Profile</Link>

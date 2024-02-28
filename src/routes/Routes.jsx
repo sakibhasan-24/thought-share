@@ -5,9 +5,8 @@ import Home from "../pages/home/Home";
 import Projects from "../pages/projects/Projects";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/SignUp/Signup";
-
-import Profile from "../pages/Dashboard/Profile";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Profile from "../pages/Dashboard/Profile";
 import Protected from "./Protected";
 import AdminRoute from "./AdminRoute";
 import CreatePost from "../pages/post/createPost/CreatePost";
@@ -16,6 +15,8 @@ import Edit from "../pages/EditPost/Edit";
 import Users from "../pages/users/Users";
 import PostDetails from "../components/PostDetails";
 import CommentsDash from "../pages/comments/CommentsDash";
+import DashboardContainer from "../pages/dashboard/DashboardContainer";
+import Search from "../components/Search";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         element: <PostDetails />,
       },
       {
+        path: "/search",
+        element: <Search />,
+      },
+      {
         path: "/dashboard",
         element: (
           <Protected>
@@ -51,6 +56,14 @@ const router = createBrowserRouter([
           </Protected>
         ),
         children: [
+          {
+            path: "/dashboard",
+            element: (
+              <Protected>
+                <DashboardContainer />
+              </Protected>
+            ),
+          },
           {
             path: "/dashboard/profile",
             element: <Profile></Profile>,

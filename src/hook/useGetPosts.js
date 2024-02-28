@@ -8,6 +8,8 @@ export default function useGetPosts() {
   //   const [showMoreButton, setShowMoreButton] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showMoreButton, setShowMoreButton] = useState(true);
+  const [totalPosts, setTotalPosts] = useState(0);
+  const [totalLastMonthPosts, setTotalLastMonthPosts] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
   const [posts, setPosts] = useState([]);
   const getPosts = async () => {
@@ -16,6 +18,9 @@ export default function useGetPosts() {
       const res = await axiosPublic(
         `/api/post/get-posts?userId=${currentUser?._id}`
       );
+      console.log(res);
+      setTotalPosts(res?.data?.totalPosts);
+      setTotalLastMonthPosts(res?.data?.lastMonthPosts);
       setPosts(res.data);
       if (res.data.posts.length < 9) setShowMoreButton(false);
     } catch (error) {
@@ -37,7 +42,7 @@ export default function useGetPosts() {
       //   console.log(res.data);
       setPosts((prev) => ({
         ...prev,
-        posts: [...prev.posts, ...res.data.posts],
+        posts: [...prev.posts, ...res?.data?.posts],
       }));
       setShowMoreButton(false);
       if (res.data.posts.length < 2) setShowMoreButton(false);
@@ -96,5 +101,7 @@ export default function useGetPosts() {
     showMoreButton,
     handleShowAllPosts,
     handleDeletePost,
+    totalPosts,
+    totalLastMonthPosts,
   };
 }

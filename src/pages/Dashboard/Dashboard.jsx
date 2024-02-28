@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import useLogOut from "../../hook/useLogOut";
 import { logOutSuccess } from "../../redux/store/userSlice";
+import DashboardContainer from "./DashboardContainer";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -31,8 +32,8 @@ export default function Dashboard() {
     }
   };
   return (
-    <div className="grid grid-cols-1  md:grid-cols-12">
-      <div className="md:col-span-3">
+    <div className="grid grid-cols-3 sm:grid-cols-8  md:grid-cols-12">
+      <div className=" col-span-1 sm:col-span-2 md:col-span-3">
         <Sidebar aria-label="Default sidebar example">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
@@ -120,7 +121,7 @@ export default function Dashboard() {
           </Sidebar.Items>
         </Sidebar>
       </div>
-      <div className="md:col-span-9">
+      <div className="col-span-3 sm:col-span-6 md:col-span-9">
         <Outlet />
       </div>
     </div>

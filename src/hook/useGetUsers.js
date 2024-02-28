@@ -8,12 +8,17 @@ export default function useGetUsers() {
   const { cureentUser } = useSelector((state) => state.user);
   const [loading, setLaoding] = useState(false);
   const [users, setUsers] = useState([]);
+  const [lastMonthUsers, setLastMonthUsers] = useState(0);
+  const [totalUsers, setTotalUser] = useState(0);
   const getUsers = async () => {
     setLaoding(true);
     try {
       const res = await axiosPublic.get("/api/users/getUsers");
       //   console.log(res.data.users);
       setUsers(res.data.users);
+      setLastMonthUsers(res?.data?.lastMonthUsers);
+      setTotalUser(res?.data?.totalUsers);
+      // console.log(res);
     } catch (error) {
       console.log(error);
     } finally {
@@ -49,5 +54,12 @@ export default function useGetUsers() {
     }
   };
 
-  return { loading, getUsers, users, handleDeleteuser };
+  return {
+    loading,
+    getUsers,
+    users,
+    handleDeleteuser,
+    lastMonthUsers,
+    totalUsers,
+  };
 }

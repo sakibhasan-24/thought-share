@@ -4,9 +4,11 @@ import Swal from "sweetalert2";
 
 export default function useGetComments() {
   const [comments, setComments] = useState([]);
+  const [lastMonthComments, setLastMonthComments] = useState(0);
+  const [totalComments, setTotalComments] = useState(0);
+  const [laoding, setLoading] = useState(false);
   const axiosPublic = useAxiosPublic();
 
-  const [laoding, setLoading] = useState(false);
   const getComments = async (postId) => {
     try {
       const res = await axiosPublic(`/api/comment/getComments/${postId}`);
@@ -20,9 +22,12 @@ export default function useGetComments() {
     setLoading(true);
     try {
       const res = await axiosPublic(`/api/comment/getAllComments/${id}`);
+      setLastMonthComments(res?.data?.lastMonthComments);
+      setTotalComments(res?.data?.totalComments);
       setComments(...comments, res?.data.comments);
+      // console.log(totalComments, lastMonthComments);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
     }
@@ -65,5 +70,7 @@ export default function useGetComments() {
     setComments,
     getAllComments,
     handleDeleteComment,
+    lastMonthComments,
+    totalComments,
   };
 }
