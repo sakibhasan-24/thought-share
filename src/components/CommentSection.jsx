@@ -7,6 +7,7 @@ import useGetComments from "../hook/useGetComments";
 import Comment from "./Comment";
 import useLike from "../hook/useLike";
 import useAxiosPublic from "../hook/useAxiosPublic";
+import Swal from "sweetalert2";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
@@ -62,7 +63,32 @@ export default function CommentSection({ postId }) {
           : comment
       )
     );
-    console.log(comments);
+    // console.log(comments);
+  };
+
+  const handleDeleteComment = async (id) => {
+    console.log(id);
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (res) => {
+        if (res.isConfirmed) {
+          const res = await axiosPublic.delete(
+            `/api/comment/delete/comment/${id}`
+          );
+          setComments(comments.filter((comment) => comment._id !== id));
+          Swal.fire("Deleted!", "Your comment has been deleted.", "success");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -119,6 +145,7 @@ export default function CommentSection({ postId }) {
                   comment={comment}
                   handleLike={handleLike}
                   handleEditComment={handleEditComment}
+                  handleDeleteComment={handleDeleteComment}
                 />
               ))}
           </>

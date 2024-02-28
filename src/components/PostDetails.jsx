@@ -3,12 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import useAxiosPublic from "../hook/useAxiosPublic";
 import { Spinner } from "flowbite-react";
 import CommentSection from "./CommentSection";
+import PostCard from "./PostCard";
 
 export default function PostDetails() {
   const { postTitle, postId } = useParams();
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(false);
   const axiosPublic = useAxiosPublic();
+  const [recentPosts, setRecentPosts] = useState([]);
   useEffect(() => {
     const getPost = async () => {
       setLoading(true);
@@ -23,10 +25,22 @@ export default function PostDetails() {
     };
     getPost();
   }, [postId]);
-  //   console.log(postTitle, postId);
-  //   /api/post/getposts
-
-  //   console.log(post[0].title);
+  useEffect(() => {
+    const getPost = async () => {
+      setLoading(true);
+      try {
+        const res = await axiosPublic(`/api/post/get-posts?limit=3`);
+        // console.log(res?.data?.posts);
+        setRecentPosts(res?.data?.posts);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getPost();
+  }, []);
+  console.log(recentPosts);
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -61,6 +75,18 @@ export default function PostDetails() {
       ></div>
       {/* commnet section */}
       <CommentSection postId={post[0]?._id} />
+      <div className="">
+        {/* recent posts */}
+        <p className="text-3xl font-semibold text-center text-slate-900">
+          Recenet Posts
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center justify-center gap-4">
+          {/* fetch recent Posts */}
+
+          {recentPosts &&
+            recentPosts?.map((post) => <PostCard key={post._id} post={post} />)}
+        </div>
+      </div>
     </div>
   );
 }

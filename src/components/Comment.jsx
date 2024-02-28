@@ -6,7 +6,12 @@ import { CiHeart } from "react-icons/ci";
 import { Button, Textarea } from "flowbite-react";
 import useAxiosPublic from "../hook/useAxiosPublic";
 
-export default function Comment({ comment, handleLike, handleEditComment }) {
+export default function Comment({
+  comment,
+  handleLike,
+  handleEditComment,
+  handleDeleteComment,
+}) {
   const { currentUser } = useSelector((state) => state.user);
   const { loading, getUser, user } = useSingleUser();
   const [isEditing, setIsEditing] = useState(false);
@@ -97,7 +102,14 @@ export default function Comment({ comment, handleLike, handleEditComment }) {
           ) : (
             ""
           )}
-          <p className="text-red-600 hover:underline cursor-pointer">delete</p>
+          {(currentUser?.isAdmin || currentUser?._id === comment?.userId) && (
+            <p
+              onClick={() => handleDeleteComment(comment?._id)}
+              className="text-red-600 hover:underline cursor-pointer"
+            >
+              delete
+            </p>
+          )}
         </div>
       </div>
     </div>
