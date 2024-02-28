@@ -15,10 +15,8 @@ export default function useGetPosts() {
   const getPosts = async () => {
     setLoading(true);
     try {
-      const res = await axiosPublic(
-        `/api/post/get-posts?userId=${currentUser?._id}`
-      );
-      console.log(res);
+      const res = await axiosPublic(`/api/post/get-posts`);
+      // console.log(res);
       setTotalPosts(res?.data?.totalPosts);
       setTotalLastMonthPosts(res?.data?.lastMonthPosts);
       setPosts(res.data);
@@ -33,11 +31,9 @@ export default function useGetPosts() {
     setLoading(true);
     try {
       const startIndex = posts?.posts?.length;
-      console.log(startIndex);
+      // console.log(startIndex);
       const res = await axiosPublic(
-        `/api/post/get-posts?userId=${
-          currentUser?._id
-        }&startIndex=${startIndex}&limit=${12}`
+        `/api/post/get-posts?startIndex=${startIndex}&limit=${12}`
       );
       //   console.log(res.data);
       setPosts((prev) => ({
@@ -46,6 +42,17 @@ export default function useGetPosts() {
       }));
       setShowMoreButton(false);
       if (res.data.posts.length < 2) setShowMoreButton(false);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const getPostsSearch = async (search) => {
+    setLoading(true);
+    try {
+      const res = await axiosPublic(`/api/post/get-posts?searchTerm=${search}`);
+      setPosts(res?.data?.posts);
     } catch (error) {
       console.log(error);
     } finally {
@@ -69,17 +76,10 @@ export default function useGetPosts() {
           const res = await axiosPublic.delete(
             `/api/post/deletePost/${postId}/${currentUser?._id}`
           );
-          //   console.log(`/api/post/deletePost/${postId}/${currentUser?._id}`);
-          //   console.log(res);
           if (res.data.success) {
             Swal.fire("Deleted!", "Your post has been deleted.", "success");
           }
-          //   setPosts((prev) => prev.posts?.filter((post) => post._id !== postId));
-          //   const remainingPosts = posts.posts?.filter(
-          //     (post) => post._id !== postId
-          //   );
-          //   //   setPosts(remainingPosts);
-          //   console.log(remainingPosts);
+
           setPosts((prev) => ({
             ...prev,
             posts: prev.posts.filter((post) => post._id !== postId),
@@ -103,5 +103,6 @@ export default function useGetPosts() {
     handleDeletePost,
     totalPosts,
     totalLastMonthPosts,
+    getPostsSearch,
   };
 }

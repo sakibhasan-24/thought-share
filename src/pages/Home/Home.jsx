@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import useGetPosts from "../../hook/useGetPosts";
 import PostCard from "../../components/PostCard";
 import { Link } from "react-router-dom";
+import SearchBox from "../../components/SearchBox";
 
 export default function Home() {
   const { posts, getPosts } = useGetPosts();
@@ -23,6 +24,9 @@ export default function Home() {
           blogs always there is a section for your comment also you cen send me
           email
         </p>
+      </div>
+      <div className="my-6 px-20">
+        <SearchBox />
       </div>
       {/* projects */}
       <div className="my-20">
