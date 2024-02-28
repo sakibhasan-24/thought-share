@@ -33,17 +33,17 @@ export default function Home() {
         <h1 className="text-4xl text-orange-900 font-bold text-center">
           Posts
         </h1>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 justify-center items-center sm:grid-cols-2 md:grid-cols-3 gap-6">
           {posts?.posts?.map((post) => (
             <PostCard key={post?._id} post={post} />
           ))}
-          <Link
-            to={`/search`}
-            className="text-xl font-semibold text-teal-700 hover:underline text-center"
-          >
-            view All
-          </Link>
         </div>
+        <Link
+          to={`/search`}
+          className="text-xl font-semibold text-teal-700 hover:underline text-center"
+        >
+          view All
+        </Link>
       </div>
     </div>
   );

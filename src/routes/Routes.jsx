@@ -17,6 +17,7 @@ import PostDetails from "../components/PostDetails";
 import CommentsDash from "../pages/comments/CommentsDash";
 import DashboardContainer from "../pages/dashboard/DashboardContainer";
 import Search from "../components/Search";
+import About from "../components/About";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/posts/:postTitle/:postId",
         element: <PostDetails />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
       {
         path: "/search",

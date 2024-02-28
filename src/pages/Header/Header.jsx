@@ -47,9 +47,6 @@ export default function Header() {
             <Dropdown.Item>
               <Link to="/dashboard/profile">Profile</Link>
             </Dropdown.Item>
-            <Dropdown.Item>Earnings</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>Sign out</Dropdown.Item>
           </Dropdown>
           <Navbar.Toggle />
         </div>
@@ -61,12 +58,17 @@ export default function Header() {
           as={"div"}
         >
           <Link className="cursor-pointer text-xl font-bold" to="/login">
-            {currentUser ? "LogOut" : "Login"}
+            {currentUser ? "" : "Login"}
           </Link>
         </Navbar.Link>
         <Navbar.Link active={location.pathname === "/projects"} as={"div"}>
           <Link className="cursor-pointer text-xl font-bold" to="/projects">
             projects
+          </Link>
+        </Navbar.Link>
+        <Navbar.Link active={location.pathname === "/about"} as={"div"}>
+          <Link className="cursor-pointer text-xl font-bold" to="/about">
+            About
           </Link>
         </Navbar.Link>
       </Navbar.Collapse>
