@@ -12,8 +12,8 @@ export default function useGetComments() {
   const getComments = async (postId) => {
     try {
       const res = await axiosPublic(`/api/comment/getComments/${postId}`);
-      //   console.log(res.data);
-      setComments(...comments, res.data.comments);
+      // console.log(res.data);
+      setComments(res?.data?.comments, ...comments);
     } catch (error) {
       console.log(error);
     }

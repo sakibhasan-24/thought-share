@@ -112,6 +112,7 @@ export default function Signup() {
             onChange={handleChange}
           />
           <p>Upload Image</p>
+          <p>don't upload image ,working......</p>
           <input
             type="file"
             name="image"

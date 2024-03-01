@@ -15,7 +15,7 @@ export default function Header() {
     if (themeNumber === 4) setThemeNumber(0);
   };
   return (
-    <Navbar fluid rounded className="bg-slate-900 p-6 rounded-lg">
+    <Navbar fluid rounded className="bg-slate-900 sm:p-6 rounded-lg">
       <Link to="/" className="font-semibold flex items-center">
         <span className="text-neutral-content text-2xl">Thought</span>
         <span className="text-orange-800 sm:text-3xl">Share</span>
@@ -36,7 +36,7 @@ export default function Header() {
             }
           >
             <Dropdown.Header>
-              <span className="block text-sm">Bonnie Green</span>
+              <span className="block text-sm">{currentUser?.userName}</span>
               <span className="block truncate text-sm font-medium">
                 {currentUser?.email}
               </span>
@@ -52,7 +52,7 @@ export default function Header() {
         </div>
       )}
 
-      <Navbar.Collapse>
+      <Navbar.Collapse className="flex flex-col">
         <Navbar.Link
           active={!currentUser && location.pathname === "/login"}
           as={"div"}
@@ -61,35 +61,26 @@ export default function Header() {
             {currentUser ? "" : "Login"}
           </Link>
         </Navbar.Link>
+        <Navbar.Link active={location.pathname === "/about"} as={"div"}>
+          <Link className="cursor-pointer text-xl font-bold" to="/about">
+            about
+          </Link>
+        </Navbar.Link>
         <Navbar.Link active={location.pathname === "/projects"} as={"div"}>
           <Link className="cursor-pointer text-xl font-bold" to="/projects">
             projects
           </Link>
         </Navbar.Link>
-        <Navbar.Link active={location.pathname === "/about"} as={"div"}>
-          <Link className="cursor-pointer text-xl font-bold" to="/about">
-            About
-          </Link>
-        </Navbar.Link>
       </Navbar.Collapse>
+
       <input
         onClick={handleTheme}
         type="radio"
         name="theme-buttons"
-        className="btn px-2 theme-controller join-item w-[100px] rounded-md"
+        className=" btn px-2 theme-controller join-item w-[100px] rounded-md"
         aria-label={ariaLevel[themeNumber]}
         value={value[themeNumber]}
       />
     </Navbar>
   );
-}
-
-{
-  /* <form className="form-control">
-          <input
-            type="text"
-            placeholder="Search"
-            className="input input-bordered sm:w-24 md:w-auto"
-          />
-        </form> */
 }

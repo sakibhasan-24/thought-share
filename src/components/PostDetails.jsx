@@ -40,7 +40,7 @@ export default function PostDetails() {
     };
     getPost();
   }, []);
-  console.log(recentPosts);
+  // console.log(recentPosts);
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">

@@ -21,6 +21,7 @@ export default function useCommentCreate() {
       console.log(error);
     } finally {
       setLoading(false);
+      setComment("");
     }
   };
   return { comment, laoding, createComment, setComment };

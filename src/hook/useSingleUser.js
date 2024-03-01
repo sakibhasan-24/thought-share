@@ -12,9 +12,10 @@ export default function useSingleUser() {
     // console.log(id);
     try {
       const res = await axiosPublic(`/api/users/getUser/${id}`);
+      // console.log(res);
       //   console.log(id);
       //   console.log(res);
-      if (res.data.success) {
+      if (res?.data?.success) {
         setUser(res.data.user);
       }
     } catch (error) {

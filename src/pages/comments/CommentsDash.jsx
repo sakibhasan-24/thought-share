@@ -17,7 +17,6 @@ export default function CommentsDash() {
   useEffect(() => {
     if (currentUser?._id) getAllComments(currentUser?._id);
   }, [currentUser?._id]);
-  //   console.log(posts);
   return (
     <div className="p-3 table-auto overflow-x-scroll md:overflow-hidden md:mx-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-blue-600 bg-white">
       {comments.length > 0 ? (
@@ -50,14 +49,6 @@ export default function CommentsDash() {
               </Table.Body>
             ))}
           </Table>
-          {/* {showMoreButton && (
-            <button
-              onClick={handleShowAllPosts}
-              className="bg-slate-800 my-6  text-white rounded-lg font-semibold px-4 py-2   mx-auto"
-            >
-              Show More
-            </button>
-          )} */}
         </>
       ) : (
         <>

@@ -13,18 +13,19 @@ export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   //   const [comment, setComment] = useState("");
   const { loading, createComment, setComment, comment } = useCommentCreate();
+  // console.log(comment);
   const { comments, getComments, setComments } = useGetComments();
 
   const axiosPublic = useAxiosPublic();
   const { handleLikeAction } = useLike();
   const handleSubmitComment = async (e) => {
     e.preventDefault();
-    const comments = await createComment(postId);
-    if (comments) {
-      setComment("");
+    const newComments = await createComment(postId);
+    if (newComments?.data?.comment) {
+      setComments((prev) => [newComments?.data?.comment, ...prev]);
+      // setComments([newComments?.data?.comment, ...comments]);
     }
   };
-  //   console.log(comments);
   useEffect(() => {
     getComments(postId);
   }, [postId]);
@@ -67,7 +68,7 @@ export default function CommentSection({ postId }) {
   };
 
   const handleDeleteComment = async (id) => {
-    console.log(id);
+    // console.log(id);
     try {
       Swal.fire({
         title: "Are you sure?",
@@ -91,6 +92,7 @@ export default function CommentSection({ postId }) {
     }
   };
 
+  // console.log(comments);
   return (
     <div className="max-w-3xl mx-auto w-full">
       <div>
@@ -110,13 +112,14 @@ export default function CommentSection({ postId }) {
                 rows={3}
                 className="w-full"
                 maxLength={600}
+                value={comment}
                 onChange={(e) => setComment(e.target.value)}
               ></Textarea>
               <p>{600 - comment.length} words is remaining</p>
               <input
                 type="submit"
                 value={"comment"}
-                className="w-1/4 cursor-pointer hover:bg-slate-600 bg-slate-700 text-white py-2 px-4 rounded-lg mt-4"
+                className="w-1/2 sm:w-1/4 cursor-pointer hover:bg-slate-600 bg-slate-700 text-white py-2 px-4 rounded-lg mt-4"
               />
             </form>
           </>

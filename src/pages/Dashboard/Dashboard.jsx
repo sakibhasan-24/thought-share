@@ -13,10 +13,31 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import useLogOut from "../../hook/useLogOut";
 import { logOutSuccess } from "../../redux/store/userSlice";
 import DashboardContainer from "./DashboardContainer";
+import useGetUsers from "../../hook/useGetUsers";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export default function Dashboard() {
   const location = useLocation();
   const dispatch = useDispatch();
+
+  const { getUsers, users } = useGetUsers();
+  let count = 0;
+  useEffect(() => {
+    const fetchData = async () => {
+      await getUsers();
+      users?.map((user) => user.adminRequest === true && count++);
+      if (count > 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "You have " + count + " admin request",
+        });
+      }
+    };
+    fetchData();
+  }, [count]);
+  console.log(users);
+  console.log(count);
   const handleRoute = (route) => {
     // console.log(route);
     if (location.pathname === route) return true;
@@ -37,17 +58,19 @@ export default function Dashboard() {
         <Sidebar aria-label="Default sidebar example">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
-              <Sidebar.Item icon={HiChartPie} as={"div"}>
-                <Link
-                  className={`${"bg-gray-900 text-white px-4 py-2 rounded-md"}`}
-                  to="/dashboard"
-                >
-                  Dashboard
-                </Link>
-              </Sidebar.Item>
+              {currentUser && currentUser?.isAdmin && (
+                <Sidebar.Item icon={HiChartPie} as={"div"}>
+                  <Link
+                    className={`${"bg-gray-900 text-white px-4 py-2 rounded-md"}`}
+                    to="/dashboard"
+                  >
+                    Dashboard
+                  </Link>
+                </Sidebar.Item>
+              )}
               <Sidebar.Item
                 icon={HiViewBoards}
-                label="user"
+                label={currentUser?.isAdmin ? "Admin" : "User"}
                 labelColor="dark"
                 as={"div"}
               >
@@ -61,8 +84,21 @@ export default function Dashboard() {
                   Profile
                 </Link>
               </Sidebar.Item>
+              {currentUser && currentUser?.isAdmin === false && (
+                <Sidebar.Item icon={HiInbox} as={"div"}>
+                  <Link
+                    className={`${
+                      handleRoute(`/dashboard/request`) &&
+                      "bg-gray-400 px-4 py-2 rounded-md"
+                    }`}
+                    to="/dashboard/request"
+                  >
+                    make request
+                  </Link>
+                </Sidebar.Item>
+              )}
               {currentUser && currentUser?.isAdmin && (
-                <Sidebar.Item icon={HiInbox} label="3" as={"div"}>
+                <Sidebar.Item icon={HiInbox} as={"div"}>
                   <Link
                     className={`${
                       handleRoute(`/dashboard/posts`) &&
@@ -75,7 +111,7 @@ export default function Dashboard() {
                 </Sidebar.Item>
               )}
               {currentUser && currentUser?.isAdmin && (
-                <Sidebar.Item icon={HiUser} label="3" as={"div"}>
+                <Sidebar.Item icon={HiUser} as={"div"}>
                   <Link
                     className={`${
                       handleRoute(`/dashboard/users`) &&
@@ -87,7 +123,7 @@ export default function Dashboard() {
                   </Link>
                 </Sidebar.Item>
               )}
-              <Sidebar.Item icon={HiInbox} label="3" as={"div"}>
+              <Sidebar.Item icon={HiInbox} as={"div"}>
                 <Link
                   className={`${
                     handleRoute(`/dashboard/comments`) &&
@@ -98,24 +134,40 @@ export default function Dashboard() {
                   Comments
                 </Link>
               </Sidebar.Item>
-              <Sidebar.Item icon={HiUser} as={"div"}>
-                Users
-              </Sidebar.Item>
+
               {currentUser && currentUser?.isAdmin && (
                 <Sidebar.Item icon={HiShoppingBag} as={"div"}>
-                  <Link to="/dashboard/create-post">Create A post</Link>
+                  <Link
+                    className={`${
+                      handleRoute(`/dashboard/create-post`) &&
+                      "bg-gray-400 px-4 py-2 rounded-md"
+                    }`}
+                    to="/dashboard/create-post"
+                  >
+                    Create A post
+                  </Link>
+                </Sidebar.Item>
+              )}
+              {currentUser && currentUser?.isAdmin && (
+                <Sidebar.Item icon={HiShoppingBag} as={"div"}>
+                  <Link
+                    className={`${
+                      handleRoute(`/dashboard/users`) &&
+                      "bg-gray-400 px-4 py-2 rounded-md"
+                    }`}
+                    to="/dashboard/users"
+                  >
+                    check-Request
+                  </Link>
                 </Sidebar.Item>
               )}
               <Sidebar.Item
                 icon={HiArrowSmRight}
-                className="cursor-pointer"
+                className="cursor-pointer "
                 onClick={() => handleLogOut(currentUser?._id)}
                 as={"div"}
               >
                 Sign Out
-              </Sidebar.Item>
-              <Sidebar.Item icon={HiTable} as={"div"}>
-                Sign Up
               </Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>

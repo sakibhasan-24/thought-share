@@ -15,7 +15,7 @@ export default function useGetUsers() {
     try {
       const res = await axiosPublic.get("/api/users/getUsers");
       //   console.log(res.data.users);
-      setUsers(res.data.users);
+      setUsers(res.data?.users);
       setLastMonthUsers(res?.data?.lastMonthUsers);
       setTotalUser(res?.data?.totalUsers);
       // console.log(res);
@@ -54,6 +54,19 @@ export default function useGetUsers() {
     }
   };
 
+  const getUser = async (id) => {
+    setLaoding(true);
+
+    try {
+      const res = await axiosPublic.get(`/api/users/getUser/${id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLaoding(false);
+    }
+  };
+
   return {
     loading,
     getUsers,
@@ -61,5 +74,6 @@ export default function useGetUsers() {
     handleDeleteuser,
     lastMonthUsers,
     totalUsers,
+    getUser,
   };
 }

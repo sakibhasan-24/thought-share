@@ -86,7 +86,7 @@ export default function Edit() {
     );
   };
   useEffect(() => {
-    if ((upload) => 0 && upload <= 100) {
+    if (upload >= 0 && upload <= 100) {
       setOpenModal(true);
     }
   }, [upload]);

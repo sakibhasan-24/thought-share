@@ -68,7 +68,7 @@ export default function Comment({
             `}
           />
         </button>
-        <div className=" flex  items-center space-x-2 gap-2 font-xs">
+        <div className=" flex flex-col sm:flex-row  items-center space-x-2 gap-2 font-xs">
           <p className="text-xs font-semibold ">
             {comment?.numberOfLikes}
             <span className="ml-1">
@@ -89,10 +89,11 @@ export default function Comment({
               {isEditing && (
                 <>
                   <Textarea
+                    className="w-full h-10 p-2 border border-slate-300 rounded-md"
                     value={editedComment}
                     onChange={(e) => setEditedComment(e.target.value)}
                   ></Textarea>
-                  <div className="flex items-center justify-end gap-2">
+                  <div className="flex flex-col sm:flex-row items-center justify-end gap-2">
                     <Button onClick={() => setIsEditing(false)}>cancel</Button>
                     <Button onClick={handleSaveComment}>Save</Button>
                   </div>

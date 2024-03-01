@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+const EMAIL = `sakibhasan200176@gmail.com`;
 export default function Contact() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -9,6 +10,12 @@ export default function Contact() {
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
+  };
+
+  const handleSendEmail = () => {
+    // const email={`mailto:${EMAIL}?subject=${subject}&body=${message}`}
+    const email = `mailto:${EMAIL}?subject=${subject}&body=${message}`;
+    window.location.href = email;
   };
   return (
     <div className="max-w-4xl mx-auto my-12">
@@ -52,15 +59,21 @@ export default function Contact() {
                 rows={6}
               />
             </div>
-            <button className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition-colors duration-300">
-              Send Email
+
+            <button
+              onClick={handleSendEmail}
+              className="bg-green-700 text-white font-bold uppercase px-4 py-2 rounded-md"
+            >
+              Send Message
             </button>
           </form>
         </div>
 
         <p>
           Email:{" "}
-          <a href="mailto:info@example.com">sakibhasan200176@gmail.com</a>
+          <a href="mailto:sakibhasan200176@gmail.com">
+            sakibhasan200176@gmail.com
+          </a>
         </p>
         <p>
           Github :{" "}

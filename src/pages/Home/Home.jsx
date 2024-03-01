@@ -3,6 +3,7 @@ import useGetPosts from "../../hook/useGetPosts";
 import PostCard from "../../components/PostCard";
 import { Link } from "react-router-dom";
 import SearchBox from "../../components/SearchBox";
+import Projects from "../projects/Projects";
 
 export default function Home() {
   const { posts, getPosts } = useGetPosts();
@@ -13,13 +14,13 @@ export default function Home() {
 
   return (
     <div>
-      <div className="max-w-6xl mx-auto px-20 lg:px-28">
+      <div className="max-w-6xl mx-auto px-12 lg:px-28">
         <h1 className="text-4xl my-2 font-semibold">
           Welcome to my{" "}
           <span className="text-amber-500 text-6xl "> Thought</span>
           Share Blog
         </h1>
-        <p className=" text-xl text-slate-700">
+        <p className=" text-xl text-center text-slate-700">
           Where I am sharing my thought,my projects,my analysis.based on my
           blogs always there is a section for your comment also you cen send me
           email

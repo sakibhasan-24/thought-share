@@ -5,8 +5,6 @@ export default function Projects() {
     <div
       data-aos="fade-left"
       data-aos-anchor="#example-anchor"
-      data-aos-offset="500"
-      data-aos-duration="500"
       className="my-12 p-4 max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg bg-white"
     >
       <h1 className="text-slate-900 text-4xl text-center font-semibold my-6">

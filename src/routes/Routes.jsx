@@ -18,6 +18,8 @@ import CommentsDash from "../pages/comments/CommentsDash";
 import DashboardContainer from "../pages/dashboard/DashboardContainer";
 import Search from "../components/Search";
 import About from "../components/About";
+import RequestAdmin from "../pages/request/RequestAdmin";
+// import RequestAdmin from "../pages/request/RequestAdmin";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
             element: (
               <Protected>
                 <DashboardContainer />
+              </Protected>
+            ),
+          },
+          {
+            path: "/dashboard/request",
+            element: (
+              <Protected>
+                <RequestAdmin />
               </Protected>
             ),
           },
